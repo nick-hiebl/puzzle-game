@@ -1,7 +1,11 @@
+import React from 'react';
+
 import Seed from 'seed-random';
 
-import { Puzzle } from './Puzzle';
-import { choose, pickUnique } from './RandomHelpers';
+import { Puzzle } from 'puzzles/Puzzle';
+import { choose, pickUnique } from 'puzzles/RandomHelpers';
+
+import './Buttons.css';
 
 type Button = string;
 
@@ -24,19 +28,19 @@ const countMatchingSequences = (buttons: Button[], seqs: ButtonSequence[]) => {
   ).length;
 }
 
-class ButtonPuzzle extends Puzzle<ButtonRules, ButtonGame, {}, {}> {
+class ButtonPuzzle extends Puzzle {
   private rules: ButtonRules;
   private game: ButtonGame;
   private state: {};
 
   constructor(seed: string, gameSeed: string) {
-    super(seed, gameSeed);
-    this.rules = ButtonPuzzle.makeRules(seed);
-    this.game = ButtonPuzzle.makeGame(this.rules, gameSeed);
+    super();
+    this.rules = this.makeRules(seed);
+    this.game = this.makeGame(this.rules, gameSeed);
     this.state = {};
   }
 
-  static makeRules(seed: string) {
+  makeRules(seed: string) {
     const rand = Seed(seed);
     const sequences: ButtonSequence[] = [];
 
@@ -47,7 +51,7 @@ class ButtonPuzzle extends Puzzle<ButtonRules, ButtonGame, {}, {}> {
     return { sequences };
   }
 
-  static makeGame({ sequences }: ButtonRules, gameSeed: string) {
+  makeGame({ sequences }: ButtonRules, gameSeed: string) {
     const rand = Seed(gameSeed);
 
     let buttons: [Button, Button, Button, Button] | undefined = undefined;
@@ -65,10 +69,35 @@ class ButtonPuzzle extends Puzzle<ButtonRules, ButtonGame, {}, {}> {
     return { buttons };
   }
 
-  getRules() { return this.rules; }
-  getGame() { return this.game; }
-  getState() { return this.state; }
-  updateState(_: {}) {}
+  renderGame() {
+    const [a,b,c,d] = this.game.buttons;
+    return (
+      <div className="frame">
+        <div className="row">
+          <div className="button">{ a }</div>
+          <div className="button">{ b }</div>
+        </div>
+        <div className="row">
+          <div className="button">{ c }</div>
+          <div className="button">{ d }</div>
+        </div>
+      </div>
+    );
+  }
+
+  renderRules() {
+    return (
+      <div>
+        {this.rules.sequences.map(seq => (
+          <div>
+            {seq.map(btn => (
+              <span>{ btn }</span>
+            ))}
+          </div>
+        ))}
+      </div>
+    );
+  }
 }
 
 export default ButtonPuzzle;

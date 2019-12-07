@@ -2,8 +2,6 @@ import React from 'react';
 
 import { Bomb } from 'puzzles/Bomb';
 
-import AnyPuzzle from './AnyPuzzle';
-
 interface Props {
   bomb: Bomb;
 }
@@ -15,9 +13,9 @@ const BombComponent = ({ bomb }: Props) => {
         The bomb:
       </h3>
       <ul>
-        {bomb.puzzles.map((puzz, idx) => (
+        {bomb.puzzles.map((puzzle, idx) => (
           <li key={idx}>
-            <AnyPuzzle {...puzz} />
+            { puzzle.renderGame() }
           </li>
         ))}
       </ul>

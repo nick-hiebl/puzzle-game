@@ -1,22 +1,18 @@
 import Seed from 'seed-random';
 
-import { AnyPuzzle } from "components/bomb/AnyPuzzle";
-import ButtonPuzzle from "./Buttons";
+import { Puzzle } from 'puzzles/Puzzle';
+import ButtonPuzzle from "components/games/buttons/Buttons";
 
 export interface Bomb {
-  puzzles: AnyPuzzle[];
+  puzzles: Puzzle[];
 }
 
 const makeBomb = (seed: string, gameSeed: string): Bomb => {
-  const puzzles: AnyPuzzle[] = [];
+  const puzzles: Puzzle[] = [];
   
   for (let i = 0; i < 3; i++) {
     const key = `${Seed(`${gameSeed}-${i}`)()}`;
-    puzzles.push({
-      kind: "buttons",
-      key,
-      puzzle: new ButtonPuzzle(seed, `${gameSeed}-${key}`)
-    });
+    puzzles.push(new ButtonPuzzle(seed, `${gameSeed}-${key}`));
   }
 
   return { puzzles };
