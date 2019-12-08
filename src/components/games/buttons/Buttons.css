@@ -5,27 +5,31 @@
   height: 200px;
 }
 
-.row {
-  display: table-row;
-}
-
 .button {
+  border: none;
+  background: white;
   display: table-cell;
   text-align: center;
   vertical-align: middle;
-  width: 50%;
-  height: 50%;
+  width: 48%;
+  margin: 1%;
+  line-height: 98px;
   transition: background-color ease-out 0.1s;
   cursor: pointer;
-  border-radius: 10%;
+  border-radius: 3%;
 }
 
-.button:hover {
-  background-color: rgba(0, 0, 0, 0.04);
+.button-enabled:hover {
+  background-color: rgba(0, 0, 0, 0.02);
   transition: background-color ease-out 0.1s;
 }
 
-.button:active {
-  background-color: rgba(0, 255, 13, 0.1);
-  transition: background-color ease-out 0.02s;
+.button-disabled {
+  background-color: rgba(0, 0, 0, 0.07);
+  transition: background-color ease-out 0.2s;
+}
+
+.button-enabled:active {
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: background-color ease-out 0.05s;
 }

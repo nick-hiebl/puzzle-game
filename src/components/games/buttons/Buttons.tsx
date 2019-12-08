@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 
 import Seed from 'seed-random';
 
@@ -6,8 +6,9 @@ import { Puzzle } from 'puzzles/Puzzle';
 import { choose, pickUnique } from 'puzzles/RandomHelpers';
 
 import './Buttons.css';
+import SingleButton from './SingleButton';
 
-type Button = string;
+export type Button = string;
 
 type ButtonSequence = Button[];
 
@@ -70,17 +71,21 @@ class ButtonPuzzle extends Puzzle {
   }
 
   renderGame() {
-    const [a,b,c,d] = this.game.buttons;
+    const [pressed, setPressed] = useReducer(
+      (state: boolean[], action: number) =>
+        state.map((b, idx) => idx === action ? true : b),
+      [false, false, false, false]
+    );
+    const onClick = (idx: number) => () => setPressed(idx);
     return (
       <div className="frame">
-        <div className="row">
-          <div className="button">{ a }</div>
-          <div className="button">{ b }</div>
-        </div>
-        <div className="row">
-          <div className="button">{ c }</div>
-          <div className="button">{ d }</div>
-        </div>
+        {this.game.buttons.map((button, index) => (
+          <SingleButton
+            onClick={onClick(index)}
+            button={button}
+            pressed={pressed[index]}
+          />
+        ))}
       </div>
     );
   }
