@@ -7,6 +7,7 @@ import { choose, pickUnique } from 'puzzles/RandomHelpers';
 
 import './Buttons.css';
 import SingleButton from './SingleButton';
+import ButtonRulesComponent from './ButtonRules';
 
 export type Button = string;
 
@@ -91,17 +92,7 @@ class ButtonPuzzle extends Puzzle {
   }
 
   renderRules() {
-    return (
-      <div>
-        {this.rules.sequences.map(seq => (
-          <div>
-            {seq.map(btn => (
-              <span>{ btn }</span>
-            ))}
-          </div>
-        ))}
-      </div>
-    );
+    return <ButtonRulesComponent rules={this.rules} />;
   }
 }
 

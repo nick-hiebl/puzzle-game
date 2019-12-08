@@ -3,6 +3,8 @@ import './App.css';
 
 import generateBomb, { Bomb } from 'puzzles/Bomb';
 import BombComponent from 'components/bomb/BombComponent';
+import generateRulebook, { Rulebook } from 'puzzles/Rulebook';
+import RulebookComponent from 'components/rulebook/RulebookComponent';
 
 type Maybe<T> = T | undefined;
 
@@ -10,6 +12,7 @@ const App: React.FC = () => {
   const [seed, setSeed] = useState('');
   const [gameSeed, setGameSeed] = useState('');
   const [bomb, setBomb] = useState(undefined as Maybe<Bomb>);
+  const [rules, setRules] = useState(undefined as Maybe<Rulebook>);
 
   const changeSeed = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSeed(e.currentTarget.value);
@@ -21,6 +24,7 @@ const App: React.FC = () => {
 
   const makeBomb = () => {
     setBomb(generateBomb(seed, gameSeed));
+    setRules(generateRulebook(seed));
   };
 
   return (
@@ -37,6 +41,9 @@ const App: React.FC = () => {
       </div>
       { bomb ? (
         <BombComponent bomb={bomb} />
+      ) : null }
+      { rules ? (
+        <RulebookComponent rules={rules} />
       ) : null }
     </div>
   );
